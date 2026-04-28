@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Índice · Scaling Building Blocks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1F4A;
+    --blue: #185FA5;
+    --sky: #378ADD;
+    --celeste: #9FE1CB;
+    --white: #FFFFFF;
+    --bg: #F5F6F8;
+    --text: #1A1A2E;
+    --muted: #6B7280;
+    --border: rgba(0,0,0,0.08);
+
+    --c-estrategia: #185FA5;
+    --c-estrategia-bg: #EBF3FB;
+    --c-personas: #A07800;
+    --c-personas-bg: #FEF8E1;
+    --c-ejecucion: #6B4423;
+    --c-ejecucion-bg: #F5EDE5;
+    --c-caja: #1A7A4A;
+    --c-caja-bg: #E5F5ED;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: #fff;
+    padding: 16px 16px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  /* ── Search ── */
+  .search-wrap {
+    position: relative;
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--bg);
+    border: 0.5px solid rgba(0,0,0,0.15);
+    border-radius: 10px;
+    padding: 11px 16px 11px 38px;
+    font-size: 14px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-input::placeholder { color: var(--muted); }
+  .search-input:focus { border-color: var(--blue); }
+
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px; height: 15px;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  /* ── Pills ── */
+  .pills-wrap {
+    padding: 12px 16px 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    display: flex;
+    gap: 6px;
+  }
+  .pills-wrap::-webkit-scrollbar { display: none; }
+
+  .pill {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.18s;
+    white-space: nowrap;
+    background: #fff;
+    color: var(--muted);
+    border-color: var(--border);
+  }
+
+  .pill.active-E { background: var(--c-estrategia); color: #fff; border-color: var(--c-estrategia); }
+  .pill.active-P { background: var(--c-personas); color: #fff; border-color: var(--c-personas); }
+  .pill.active-X { background: var(--c-ejecucion); color: #fff; border-color: var(--c-ejecucion); }
+  .pill.active-C { background: var(--c-caja); color: #fff; border-color: var(--c-caja); }
+  .pill.active-all { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+  .pill-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    opacity: 0.7;
+  }
+
+  /* ── Section headers ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 16px 8px;
+  }
+
+  .section-bar {
+    width: 3px;
+    height: 18px;
+    border-radius: 2px;
+  }
+  .bar-E { background: var(--c-estrategia); }
+  .bar-P { background: var(--c-personas); }
+  .bar-X { background: var(--c-ejecucion); }
+  .bar-C { background: var(--c-caja); }
+
+  .section-name {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .name-E { color: var(--c-estrategia); }
+  .name-P { color: var(--c-personas); }
+  .name-X { color: var(--c-ejecucion); }
+  .name-C { color: var(--c-caja); }
+
+  .section-count {
+    margin-left: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── BB Cards ── */
+  .cards-list {
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .bb-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.18s;
+  }
+  .bb-card:active { box-shadow: 0 0 0 2px rgba(24,95,165,0.2); }
+
+  .bb-card-header {
+    display: flex;
+    align-items: flex-start;
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .bb-num-badge {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 1px;
+  }
+  .badge-E { background: var(--c-estrategia-bg); color: var(--c-estrategia); }
+  .badge-P { background: var(--c-personas-bg); color: var(--c-personas); }
+  .badge-X { background: var(--c-ejecucion-bg); color: var(--c-ejecucion); }
+  .badge-C { background: var(--c-caja-bg); color: var(--c-caja); }
+
+  .bb-main { flex: 1; min-width: 0; }
+
+  .bb-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .bb-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .bb-footer {
+    border-top: 1px solid var(--border);
+    padding: 9px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .bb-recurso {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .bb-recurso svg { opacity: 0.5; }
+
+  .bb-expand-btn {
+    font-size: 11px;
+    color: var(--blue);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  /* Expanded state */
+  .bb-full-desc {
+    display: none;
+    padding: 0 16px 14px 60px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .bb-card.expanded .bb-full-desc { display: block; }
+  .bb-card.expanded .bb-desc { display: none; }
+  .bb-card.expanded .bb-expand-btn .chevron { transform: rotate(180deg); }
+  .chevron { transition: transform 0.2s; display: inline-block; }
+
+  /* ── Empty state ── */
+  .empty-state {
+    padding: 48px 16px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    display: none;
+  }
+  .empty-state.visible { display: block; }
+
+  /* ── Footer ── */
+  .footer {
+    padding: 24px 16px 40px;
+    text-align: center;
+  }
+  .footer-text {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    opacity: 0.6;
+  }
+
+  /* ── Desktop adjustments ── */
+  @media (min-width: 600px) {
+    .header { padding: 24px 24px 28px; }
+    .header-title { font-size: 24px; }
+    .pills-wrap { padding: 14px 24px 4px; }
+    .section-header { padding: 24px 24px 10px; }
+    .cards-list { padding: 0 24px; gap: 10px; }
+    .footer { padding: 32px 24px 48px; }
+  }
+
+  @media (min-width: 900px) {
+    body { max-width: 720px; margin: 0 auto; }
+    .header { border-radius: 0 0 16px 16px; }
+  }
+
+  /* ── No results highlight ── */
+  .highlight {
+    background: #FFF3CD;
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="search-wrap">
+    <svg class="search-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="6.5" cy="6.5" r="5" stroke="#6B7280" stroke-width="1.3"/>
+      <path d="M11 11L14.5 14.5" stroke="#6B7280" stroke-width="1.3" stroke-linecap="round"/>
+    </svg>
+    <input class="search-input" type="search" placeholder="Buscar building block…" id="search" autocomplete="off" autocorrect="off">
+  </div>
+</div>
+
+<div class="pills-wrap" id="pills">
+  <div class="pill active-all" data-filter="all" onclick="filter('all', this)">Todos <span class="pill-count">36</span></div>
+  <div class="pill" data-filter="E" onclick="filter('E', this)">Estrategia <span class="pill-count">16</span></div>
+  <div class="pill" data-filter="P" onclick="filter('P', this)">Personas <span class="pill-count">16</span></div>
+  <div class="pill" data-filter="X" onclick="filter('X', this)">Ejecución <span class="pill-count">8</span></div>
+  <div class="pill" data-filter="C" onclick="filter('C', this)">Caja <span class="pill-count">5</span></div>
+</div>
+
+<div id="main-content">
+
+<!-- ESTRATEGIA -->
+<div class="section-block" data-cat="E">
+  <div class="section-header">
+    <div class="section-bar bar-E"></div>
+    <span class="section-name name-E">Estrategia</span>
+    <span class="section-count">16 bloques</span>
+  </div>
+  <div class="cards-list">
+
+    <div class="bb-card" data-cat="E" data-name="cultura propósito valores centrales">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E1</div>
+        <div class="bb-main">
+          <div class="bb-name">Cultura: propósito y valores centrales</div>
+          <div class="bb-desc">Introducción a opciones de personas y a una cultura por diseño que ayuda al desempeño.</div>
+          <div class="bb-full-desc">Introducción a opciones de personas y a una cultura por diseño que ayuda al desempeño. Permite establecer los fundamentos culturales que guiarán las decisiones del equipo.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="E" data-name="fortaleza central debilidades tendencias">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E2</div>
+        <div class="bb-main">
+          <div class="bb-name">Fortaleza central, debilidades y tendencias</div>
+          <div class="bb-desc">Fortalezas, debilidades inherentes y tendencias del mercado.</div>
+          <div class="bb-full-desc">Fortalezas, debilidades inherentes y tendencias: ¿hay una start up que nos pudiera desbancar en los próximos 5 años? Ejercicio estratégico para evaluar la posición competitiva.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="E" data-name="valores dos and donts acciones">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E3</div>
+        <div class="bb-main">
+          <div class="bb-name">Valores: Dos and don'ts</div>
+          <div class="bb-desc">Profundización de valores y acciones concretas que hacemos y no hacemos a partir de ellos.</div>
+          <div class="bb-full-desc">Ejercicio de profundización de valores llevado a acciones que hacemos y que no hacemos a partir de dichos valores. Permite operacionalizar la cultura en conductas cotidianas.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación y documento</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="E" data-name="acciones para vivir propósito ritos artefactos">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E4</div>
+        <div class="bb-main">
+          <div class="bb-name">Acciones para vivir el propósito</div>
+          <div class="bb-desc">Ritos y artefactos para poder vivir el propósito y los valores cada día.</div>
+          <div class="bb-full-desc">Establecer los ritos y artefactos para poder vivir el propósito y los valores cada día. Una parte del PEUP y presentación como recursos de apoyo.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> PEUP + Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="E" data-name="territorio de mercado productos servicios geografía canales">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E5</div>
+        <div class="bb-main">
+          <div class="bb-name">Territorio de mercado</div>
+          <div class="bb-desc">Definir en qué productos, geografía, canales y tipo de cliente nos enfocaremos para crecer.</div>
+          <div class="bb-full-desc">Definir en qué productos o servicios nos focalizaremos para crecer, en qué lugar geográfico, en qué canales y en qué tipo de cliente. Clarifica el campo de juego estratégico de la empresa.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="E" data-name="cliente principal promesa de marca persona">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E6</div>
+        <div class="bb-main">
+          <div class="bb-name">Cliente principal y promesa de marca</div>
+          <div class="bb-desc">Mapeo de clientes de alto margen. Identificación del cliente persona y propuesta de valor en tres promesas de marca.</div>
+          <div class="bb-full-desc">Mapeo de clientes de alto margen relativo y alta afinidad. Identificación de cliente persona, sus 5 características y ponerle un nombre lúdico. Identificar la propuesta de valor en tres promesas de marca y KPI para medirlas.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="E" data-name="estrategia en una frase palanca dinero">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E7</div>
+        <div class="bb-main">
+          <div class="bb-name">Estrategia en una frase</div>
+          <div class="bb-desc">Identificación de la principal palanca para generar dinero o en qué somos malos con nuestros clientes.</div>
+          <div class="bb-full-desc">Identificación de la principal palanca para generar dinero o en qué somos malos con nuestros clientes. Esta frase debe ser el norte estratégico que guía todas las decisiones del equipo.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="E" data-name="actividades diferenciadoras gestión promesa marca">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E8</div>
+        <div class="bb-main">
+          <div class="bb-name">Actividades diferenciadoras</div>
+          <div class="bb-desc">Estrategia bajada a actividades de gestión que alimenten la promesa de marca y la estrategia en una frase.</div>
+          <div class="bb-full-desc">Estrategia bajada a actividades de gestión que alimenten la promesa de marca y la estrategia en una frase. Define qué hace la empresa diferente en su operación diaria.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="E" data-name="modelo de negocios canvas resumen">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E9</div>
+        <div class="bb-main">
+          <div class="bb-name">Modelo de negocios</div>
+          <div class="bb-desc">Canvas que resume cliente principal, promesa de marca, estrategia en una frase y actividades diferenciadoras.</div>
+          <div class="bb-full-desc">Canvas que completa el modelo de negocios: resumen del cliente principal, promesa de marca, estrategia en una frase y actividades diferenciadoras. Integra toda la estrategia en una sola vista.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Diap. Modelo de Negocios · Canva</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="E" data-name="factor x fricción diferenciación industria">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E10</div>
+        <div class="bb-main">
+          <div class="bb-name">Factor X</div>
+          <div class="bb-desc">Fricción de la industria que buscaremos resolver 10 veces más rápido, barato o mejor que la competencia.</div>
+          <div class="bb-full-desc">Identificación de una fricción de nuestra industria que definiremos como factor X de diferenciación y que buscaremos realizar 10 veces más rápida, más barata o mejor que nuestra competencia.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="E" data-name="flywheel estrategia motores crecimiento">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E11</div>
+        <div class="bb-main">
+          <div class="bb-name">Flywheel de estrategia</div>
+          <div class="bb-desc">Definir los motores de crecimiento mediante el método Flywheel.</div>
+          <div class="bb-full-desc">Definir los motores de crecimiento para lograrlo con método de Flywheel. Cada empujón acelera el volante y con el tiempo el impulso se vuelve imparable.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación + prework</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="E" data-name="marco atributos de marca diferenciación">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E12</div>
+        <div class="bb-main">
+          <div class="bb-name">Marco de atributos de marca</div>
+          <div class="bb-desc">Atributos para afinar la promesa de marca en mercados nuevos o unidades de negocio.</div>
+          <div class="bb-full-desc">Atributos para afinar promesa de marca. Útil para definir diferenciación en mercados nuevos o unidades de negocio que se deben abrir mercado.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="E" data-name="palabras que te pertenecen marketing">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E13</div>
+        <div class="bb-main">
+          <div class="bb-name">Palabras que te pertenecen</div>
+          <div class="bb-desc">Identificar las palabras que queremos apropiarnos frente a nuestros clientes en marketing.</div>
+          <div class="bb-full-desc">Trabajo para identificar las palabras que queremos apropiarnos frente a nuestros clientes para ser usadas en nuestro marketing. Define el lenguaje de la marca.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="E" data-name="job to be done viaje del cliente">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E14</div>
+        <div class="bb-main">
+          <div class="bb-name">Job to be done</div>
+          <div class="bb-desc">Revisión del viaje del cliente para ajustar acciones de mejora.</div>
+          <div class="bb-full-desc">Revisión del viaje del cliente para ajustar acciones de mejoras. Permite identificar qué trabajo real está contratando el cliente cuando elige nuestro producto o servicio.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="E" data-name="profit x motor económico rentabilidad sostenible">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E15</div>
+        <div class="bb-main">
+          <div class="bb-name">Profit / X</div>
+          <div class="bb-desc">Motor económico que define cómo la empresa genera rentabilidad sostenible. El "X" es la unidad clave de valor.</div>
+          <div class="bb-full-desc">Motor económico que define cómo la empresa genera rentabilidad de manera sostenible. El "X" representa la unidad clave de valor (cliente, producto, contrato, empleado, etc.).</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="E" data-name="BHAG meta audaz largo plazo visión">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-E">E16</div>
+        <div class="bb-main">
+          <div class="bb-name">BHAG</div>
+          <div class="bb-desc">Meta audaz a 15 años que inspira y alinea al equipo hacia el largo plazo.</div>
+          <div class="bb-full-desc">Meta audaz a 15 años que no cambia seguido, pero que nos cambia. Permite inspirar y alinear al equipo hacia el largo plazo. Hay de distintos tipos: de volumen/crecimiento, diferenciación, competitivas, transformación, etc.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PERSONAS -->
+<div class="section-block" data-cat="P">
+  <div class="section-header">
+    <div class="section-bar bar-P"></div>
+    <span class="section-name name-P">Personas</span>
+    <span class="section-count">16 bloques</span>
+  </div>
+  <div class="cards-list">
+
+    <div class="bb-card" data-cat="P" data-name="diagnóstico efectividad equipo disfunciones">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P1</div>
+        <div class="bb-main">
+          <div class="bb-name">Diagnóstico de efectividad de equipo</div>
+          <div class="bb-desc">Modelo de las 5 disfunciones de Lencioni y encuesta respondida por todo el equipo.</div>
+          <div class="bb-full-desc">Presentación de modelo de las 5 disfunciones de un equipo y los resultados de la encuesta respondida por todo el equipo. Luego realizar ejercicio de confianza o de alguna de las disfunciones.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="P" data-name="tipos personalidad MBTI DISC">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P2</div>
+        <div class="bb-main">
+          <div class="bb-name">Tipos de personalidad</div>
+          <div class="bb-desc">Ejercicios para identificar diferentes personalidades: MBTI o DISC.</div>
+          <div class="bb-full-desc">Ejercicios para identificar las diferentes personalidades: MBTI ó DISC. Permite al equipo comprender mejor sus diferencias y complementariedades.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="P" data-name="mapa de talentos A B C D jugadores">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P3</div>
+        <div class="bb-main">
+          <div class="bb-name">Mapa de talentos</div>
+          <div class="bb-desc">Taller para identificar jugadores A, B, C y D dentro del equipo y un plan de mejora para cada uno.</div>
+          <div class="bb-full-desc">Taller para identificar jugadores A, B, C y D dentro del equipo y un plan de mejora para cada uno (liderazgo). Herramienta clave para decisiones de talento.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Excel + Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="P" data-name="top grading selección talento contratación scorecard">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P4</div>
+        <div class="bb-main">
+          <div class="bb-name">Top Grading</div>
+          <div class="bb-desc">Método de selección y gestión de talento que asegura tener a las personas correctas en los puestos clave.</div>
+          <div class="bb-full-desc">Método de selección y gestión de talento que asegura tener a las personas correctas en los puestos clave, elevando el nivel del equipo y reduciendo errores de contratación.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> —</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="P" data-name="ejercicios confianza vulnerabilidad seguridad psicológica">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P5</div>
+        <div class="bb-main">
+          <div class="bb-name">Ejercicios de confianza</div>
+          <div class="bb-desc">Conversación sobre las 5 disfunciones y ejercicios de confianza y vulnerabilidad.</div>
+          <div class="bb-full-desc">Conversación en torno a las cinco disfunciones del equipo y varios ejercicios de confianza y vulnerabilidad: seguridad psicológica, historia personal, historia de vida en dos minutos, pregunta sorpresa.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="P" data-name="accountability feedback in your face compromiso">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P6</div>
+        <div class="bb-main">
+          <div class="bb-name">Ejercicio de accountability: Feedback in your face</div>
+          <div class="bb-desc">Feedback en equipo líder para promover accountability y compromiso de mejora.</div>
+          <div class="bb-full-desc">Ejercicio de feedback in your face con el equipo líder para promover el accountability y el compromiso de mejora. Usa post-its, lápices y Excel explicativo.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Post-it + Excel explicativo</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="P" data-name="ejercicios conflicto perfil saboteadores escucha">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P7</div>
+        <div class="bb-main">
+          <div class="bb-name">Ejercicios de conflicto</div>
+          <div class="bb-desc">Perfil de conflicto, cómo enfrentar un conflicto, escucha y ejercicio de saboteadores.</div>
+          <div class="bb-full-desc">Conversación en torno a las cinco disfunciones del equipo y conversación en torno a conflicto: perfil de conflicto, cómo enfrentar un conflicto, escucha, ejercicio de saboteadores.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> —</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="P" data-name="ejercicio compromiso QQC disfunciones equipo">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P8</div>
+        <div class="bb-main">
+          <div class="bb-name">Ejercicio de compromiso</div>
+          <div class="bb-desc">Conversación en torno a las cinco disfunciones y al compromiso del equipo.</div>
+          <div class="bb-full-desc">QQC — Conversación en torno a las cinco disfunciones del equipo y conversación en torno a compromiso. Trabaja la disfunción de falta de compromiso.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> —</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="P" data-name="ejercicios comunicación equipo">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P9</div>
+        <div class="bb-main">
+          <div class="bb-name">Ejercicios de comunicación</div>
+          <div class="bb-desc">Dinámicas para mejorar la comunicación dentro del equipo.</div>
+          <div class="bb-full-desc">Ejercicios prácticos para mejorar la comunicación dentro del equipo líder. Trabaja la escucha activa y la claridad en el mensaje.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> —</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="P" data-name="FACe funciones claras rendición de cuentas">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P10</div>
+        <div class="bb-main">
+          <div class="bb-name">FACe: funciones claras</div>
+          <div class="bb-desc">Identifica las funciones clave del negocio, expectativas y la persona que rinde cuentas de cada una.</div>
+          <div class="bb-full-desc">Ejercicio que identifica las funciones clave del negocio, las expectativas de cada función y la persona que rinde cuentas de cada función. Herramienta de claridad organizacional.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Excel</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="P" data-name="PACe procesos claros rendición cuentas">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P11</div>
+        <div class="bb-main">
+          <div class="bb-name">PACe: procesos claros</div>
+          <div class="bb-desc">Identifica los procesos clave del negocio, expectativas y la persona que rinde cuentas.</div>
+          <div class="bb-full-desc">Ejercicio que identifica los procesos clave del negocio, las expectativas de cada proceso y la persona que rinde cuentas de cada proceso. Complementa el FACe.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Excel</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="P" data-name="plan personal propósito metas personales">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P12</div>
+        <div class="bb-main">
+          <div class="bb-name">Plan personal y propósito</div>
+          <div class="bb-desc">Definición de metas personales, gestión del tiempo y propósito individual.</div>
+          <div class="bb-full-desc">Metas personales, uso y ladrones del tiempo. Alineación entre propósito personal y propósito organizacional.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> —</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="P" data-name="liderazgo GROW modelo conversacional coaching">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P13</div>
+        <div class="bb-main">
+          <div class="bb-name">Liderazgo: GROW</div>
+          <div class="bb-desc">Taller con foco en modelo conversacional GROW y el líder como coach.</div>
+          <div class="bb-full-desc">Taller de liderazgo con foco en modelo conversacional GROW y el líder como coach. Incluye ejercicio práctico para aplicar el modelo en conversaciones reales.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="P" data-name="liderazgo feedback feedforward">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P14</div>
+        <div class="bb-main">
+          <div class="bb-name">Liderazgo: Feedback</div>
+          <div class="bb-desc">Taller con foco en modelo de feedback y feedforward. Incluye ejercicio.</div>
+          <div class="bb-full-desc">Taller de liderazgo con foco en modelo de feedback y feedforward. Incluye ejercicio práctico para desarrollar la habilidad de dar y recibir retroalimentación efectiva.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="P" data-name="liderazgo accountability tablero control cargo">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P15</div>
+        <div class="bb-main">
+          <div class="bb-name">Liderazgo: Accountability</div>
+          <div class="bb-desc">Taller con foco en accountability y herramientas: funciones claras, procesos y tablero de control de cargo.</div>
+          <div class="bb-full-desc">Taller de liderazgo con foco en accountability y herramientas como: funciones claras, procesos claros y tablero de control de cargo. Incluye ejercicio práctico.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="P" data-name="reconocimiento estratégico conductas repetir formato">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-P">P16</div>
+        <div class="bb-main">
+          <div class="bb-name">Reconocimiento estratégico</div>
+          <div class="bb-desc">Definir qué conductas quiero que se repitan y qué voy a reconocer en el equipo.</div>
+          <div class="bb-full-desc">¿Qué conductas quiero que se repitan? ¿Qué voy a reconocer? Ejercicio para diseñar un sistema de reconocimiento alineado a los valores y estrategia de la empresa.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Formato</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- EJECUCIÓN -->
+<div class="section-block" data-cat="X">
+  <div class="section-header">
+    <div class="section-bar bar-X"></div>
+    <span class="section-name name-X">Ejecución</span>
+    <span class="section-count">8 bloques</span>
+  </div>
+  <div class="cards-list">
+
+    <div class="bb-card" data-cat="X" data-name="hábitos de ejecución training KPIs">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-X">Ej1</div>
+        <div class="bb-main">
+          <div class="bb-name">Training hábitos de ejecución</div>
+          <div class="bb-desc">Entrenamiento en los hábitos clave para ejecutar con consistencia.</div>
+          <div class="bb-full-desc">Entrenamiento en los hábitos fundamentales de ejecución que permiten al equipo operar con consistencia y resultados predecibles.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> —</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="X" data-name="KPIs diarios semanales training métricas">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-X">Ej2</div>
+        <div class="bb-main">
+          <div class="bb-name">Training KPIs diarios y semanales</div>
+          <div class="bb-desc">Ejercicios para construir KPIs efectivos en un trimestre.</div>
+          <div class="bb-full-desc">Ejercicios para construir KPIs en un trimestre. Permite al equipo definir indicadores que reflejen el avance real hacia sus metas.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> —</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="X" data-name="productividad personal pomodoro urgente importante ladrones tiempo">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-X">Ej3</div>
+        <div class="bb-main">
+          <div class="bb-name">Productividad personal</div>
+          <div class="bb-desc">Metas personales, ladrones del tiempo, método Pomodoro y lo urgente vs lo importante.</div>
+          <div class="bb-full-desc">Metas personales, uso y ladrones del tiempo y métodos de productividad: método Pomodoro, método de lo urgente vs lo importante.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> —</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="X" data-name="encuesta 10 hábitos diagnóstico ejecución">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-X">Ej4</div>
+        <div class="bb-main">
+          <div class="bb-name">Encuesta 10 hábitos</div>
+          <div class="bb-desc">Diagnóstico de los 10 hábitos clave de ejecución en el equipo.</div>
+          <div class="bb-full-desc">Encuesta diagnóstica sobre los 10 hábitos de ejecución más importantes. Permite identificar fortalezas y brechas en la disciplina operacional del equipo.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> —</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="X" data-name="ventas consultiva taller vendedores">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-X">Ej5</div>
+        <div class="bb-main">
+          <div class="bb-name">Ventas consultiva</div>
+          <div class="bb-desc">Taller para definir y enseñar a los vendedores cómo vender de manera consultiva.</div>
+          <div class="bb-full-desc">Taller para definir y entender la venta consultiva. Enseña a los vendedores cómo vender acompañando al cliente en su proceso de decisión.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> —</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="X" data-name="empezar parar continuar ejercicio retrospectiva">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-X">Ej6</div>
+        <div class="bb-main">
+          <div class="bb-name">Ejercicio Empezar, Parar, Continuar</div>
+          <div class="bb-desc">Dinámica de retrospectiva para identificar qué hacer, qué detener y qué mantener.</div>
+          <div class="bb-full-desc">Ejercicio para identificar con claridad qué debemos empezar a hacer, qué debemos parar y qué debemos continuar. Herramienta de mejora continua para equipos.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> —</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="X" data-name="pits velero aceleradores fricciones dinámica">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-X">Ej7</div>
+        <div class="bb-main">
+          <div class="bb-name">Pits / Velero</div>
+          <div class="bb-desc">Dinámica para identificar fricciones (pits) y aceleradores (velas) del equipo.</div>
+          <div class="bb-full-desc">Ejercicio que usa la metáfora del velero para identificar qué nos impulsa (viento en las velas) y qué nos frena (anclas y pits) en la ejecución.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> —</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="X" data-name="priorizar flywheel aceleradores fricciones presentación">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-X">Ej8</div>
+        <div class="bb-main">
+          <div class="bb-name">Priorizar en base al Flywheel</div>
+          <div class="bb-desc">Ejercicios para definir prioridades en base a aceleradores y fricciones del Flywheel.</div>
+          <div class="bb-full-desc">Ejercicios para definir prioridades en base a aceleradores y fricciones. Conecta la priorización diaria con los motores estratégicos de crecimiento.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación + imagen</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CAJA -->
+<div class="section-block" data-cat="C">
+  <div class="section-header">
+    <div class="section-bar bar-C"></div>
+    <span class="section-name name-C">Caja</span>
+    <span class="section-count">5 bloques</span>
+  </div>
+  <div class="cards-list">
+
+    <div class="bb-card" data-cat="C" data-name="nuggets caja hilo conductor sesiones impacto">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-C">C1</div>
+        <div class="bb-main">
+          <div class="bb-name">Nuggets de caja</div>
+          <div class="bb-desc">Discurso transversal sobre caja para usar en todas las sesiones como hilo conductor.</div>
+          <div class="bb-full-desc">Discurso transversal sobre Caja para usar en todas las sesiones con clientes. Lo clave es que se convierta en un hilo conductor: cada decisión, cada bloque y cada dinámica debe mostrar cómo impacta en la caja.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Documento</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="C" data-name="caja pulso financiero EBITDA ventas estados financieros">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-C">C2</div>
+        <div class="bb-main">
+          <div class="bb-name">Caja: el pulso financiero</div>
+          <div class="bb-desc">Introducción a caja: relación entre ventas y EBITDA, costos e introducción a estados financieros.</div>
+          <div class="bb-full-desc">Introducción a caja: relación entre ventas y EBITDA, costo y EBITDA, introducción de estados financieros. Desarrolla la alfabetización financiera del equipo directivo.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="C" data-name="ciclo conversión efectivo provisionamiento facturación cobranzas">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-C">C3</div>
+        <div class="bb-main">
+          <div class="bb-name">Ciclo de conversión de efectivo</div>
+          <div class="bb-desc">Comprensión y mejora de plazos de provisionamiento, ventas, facturación y cobranzas.</div>
+          <div class="bb-full-desc">Comprensión y mejora de los plazos de provisionamiento, ventas, facturación y cobranzas. Permite identificar dónde se estanca el efectivo en el ciclo operacional.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> —</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="C" data-name="poder de 1 siete palancas efectivo cashflow story">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-C">C4</div>
+        <div class="bb-main">
+          <div class="bb-name">Poder de 1: 7 palancas de efectivo</div>
+          <div class="bb-desc">7 palancas para una estrategia ganadora y dominar la industria. Uso de Cashflow Story.</div>
+          <div class="bb-full-desc">7 palancas para definir una estrategia ganadora, diferenciarse de la competencia y dominar la industria. Uso de Cashflow Story para visualizar el impacto de cada palanca.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+    <div class="bb-card" data-cat="C" data-name="estrategias precio modelo de negocio margen valor">
+      <div class="bb-card-header">
+        <div class="bb-num-badge badge-C">C5</div>
+        <div class="bb-main">
+          <div class="bb-name">Estrategias de precio</div>
+          <div class="bb-desc">Principios y ejercicio para definir una estrategia de precios que maximice el margen.</div>
+          <div class="bb-full-desc">Principios y ejercicio para definir una estrategia de precios que maximice el margen y esté en línea con el valor del producto o servicio. Vincula precio con percepción de valor del cliente.</div>
+        </div>
+      </div>
+      <div class="bb-footer">
+        <span class="bb-recurso"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/><path d="M3 4h6M3 6h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg> Presentación</span>
+        <span class="bb-expand-btn" onclick="toggleCard(this)">Ver más <span class="chevron">↓</span></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- end main-content -->
+
+<div class="empty-state" id="empty-state">No se encontraron resultados para tu búsqueda.</div>
+
+<div class="footer">
+  <div class="footer-text">scaling · 45 building blocks</div>
+</div>
+
+<script>
+let currentFilter = 'all';
+let searchQuery = '';
+
+const allCards = document.querySelectorAll('.bb-card');
+const allSections = document.querySelectorAll('.section-block');
+const emptyState = document.getElementById('empty-state');
+const headerCount = document.getElementById('header-count');
+
+function applyFilters() {
+  let visible = 0;
+  allSections.forEach(section => {
+    const cat = section.dataset.cat;
+    const showSection = currentFilter === 'all' || currentFilter === cat;
+    let sectionVisible = 0;
+    section.querySelectorAll('.bb-card').forEach(card => {
+      const cardCat = card.dataset.cat;
+      const cardName = card.dataset.name + ' ' + card.querySelector('.bb-name').textContent.toLowerCase();
+      const matchesCat = currentFilter === 'all' || currentFilter === cardCat;
+      const matchesSearch = !searchQuery || cardName.toLowerCase().includes(searchQuery);
+      const show = matchesCat && matchesSearch;
+      card.style.display = show ? '' : 'none';
+      if (show) { visible++; sectionVisible++; }
+    });
+    section.style.display = (showSection && sectionVisible > 0) ? '' : 'none';
+  });
+  emptyState.classList.toggle('visible', visible === 0);
+  const total = currentFilter === 'all' ? 45 : visible;
+  headerCount.textContent = visible + ' building block' + (visible !== 1 ? 's' : '');
+}
+
+function filter(cat, el) {
+  currentFilter = cat;
+  document.querySelectorAll('.pill').forEach(p => {
+    p.className = 'pill';
+    if (p === el) p.classList.add('active-' + (cat === 'all' ? 'all' : cat));
+  });
+  applyFilters();
+}
+
+document.getElementById('search').addEventListener('input', function() {
+  searchQuery = this.value.toLowerCase().trim();
+  applyFilters();
+});
+
+function toggleCard(btn) {
+  const card = btn.closest('.bb-card');
+  card.classList.toggle('expanded');
+  btn.querySelector('span:first-child').textContent = card.classList.contains('expanded') ? 'Ver menos ' : 'Ver más ';
+}
+</script>
+
+</body>
+</html>
