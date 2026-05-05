@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Índice · Scaling Building Blocks</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1F4A;
+    --blue: #185FA5;
+    --text: #1A1A2E;
+    --muted: #6B7280;
+    --border: rgba(0,0,0,0.07);
+    --c-E: #185FA5; --bg-E: #EBF3FB;
+    --c-P: #A07800; --bg-P: #FEF8E1;
+    --c-X: #6B4423; --bg-X: #F5EDE5;
+    --c-C: #1A7A4A; --bg-C: #E5F5ED;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #fff;
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Header / Search ── */
+  .header {
+    background: #fff;
+    padding: 14px 20px 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .search-wrap { position: relative; }
+
+  .search-input {
+    width: 100%;
+    background: #F5F6F8;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 9px 14px 9px 36px;
+    font-size: 14px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--blue); background: #fff; }
+  .search-input::placeholder { color: var(--muted); }
+
+  .search-icon {
+    position: absolute; left: 11px; top: 50%;
+    transform: translateY(-50%);
+    width: 14px; height: 14px; opacity: 0.4; pointer-events: none;
+  }
+
+  /* ── Pills ── */
+  .pills-wrap {
+    display: flex; gap: 6px; padding: 10px 20px 0;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .pills-wrap::-webkit-scrollbar { display: none; }
+
+  .pill {
+    flex-shrink: 0; padding: 5px 14px; border-radius: 999px;
+    font-size: 12px; font-weight: 500; cursor: pointer;
+    border: 1px solid var(--border); background: #fff;
+    color: var(--muted); transition: all 0.15s; white-space: nowrap;
+  }
+  .pill.active-all { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .pill.active-E { background: var(--c-E); color: #fff; border-color: var(--c-E); }
+  .pill.active-P { background: var(--c-P); color: #fff; border-color: var(--c-P); }
+  .pill.active-X { background: var(--c-X); color: #fff; border-color: var(--c-X); }
+  .pill.active-C { background: var(--c-C); color: #fff; border-color: var(--c-C); }
+
+  /* ── Content ── */
+  .content { padding: 16px 20px 48px; }
+
+  /* ── Section label ── */
+  .section-label {
+    display: inline-block;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 3px 10px;
+    border-radius: 4px; margin: 20px 0 10px;
+    border-left: 3px solid;
+  }
+
+  /* ── BB Row ── */
+  .bb-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .bb-row:last-child { border-bottom: none; }
+
+  .bb-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    min-width: 28px; flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .bb-main-text { flex: 1; min-width: 0; }
+
+  .bb-name {
+    font-size: 13px; font-weight: 500;
+    color: var(--text); display: block;
+    margin-bottom: 2px;
+  }
+
+  .bb-sep { display: none; }
+
+  .bb-desc {
+    font-size: 12px; color: var(--muted);
+    line-height: 1.5; display: block;
+    margin-bottom: 3px;
+  }
+
+  .bb-recurso {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; color: var(--muted);
+    background: #F5F6F8; padding: 2px 7px;
+    border-radius: 4px; display: inline-block;
+    white-space: nowrap;
+  }
+
+  /* ── Empty ── */
+  .empty-state {
+    padding: 48px 20px; text-align: center;
+    color: var(--muted); font-size: 14px; display: none;
+  }
+  .empty-state.visible { display: block; }
+
+  @media (min-width: 600px) {
+    .header { padding: 14px 28px 12px; }
+    .pills-wrap { padding: 10px 28px 0; }
+    .content { padding: 16px 28px 48px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="search-wrap">
+    <svg class="search-icon" viewBox="0 0 16 16" fill="none">
+      <circle cx="6.5" cy="6.5" r="5" stroke="#6B7280" stroke-width="1.3"/>
+      <path d="M11 11L14.5 14.5" stroke="#6B7280" stroke-width="1.3" stroke-linecap="round"/>
+    </svg>
+    <input class="search-input" type="search" placeholder="Buscar building block…" id="search" autocomplete="off">
+  </div>
+</div>
+
+<div class="pills-wrap">
+  <div class="pill active-E" onclick="filter('E',this)">Estrategia</div>
+  <div class="pill" onclick="filter('P',this)">Personas</div>
+  <div class="pill" onclick="filter('X',this)">Ejecución</div>
+  <div class="pill" onclick="filter('C',this)">Caja</div>
+  <div class="pill" onclick="filter('all',this)">Todos</div>
+</div>
+
+<div class="content">
+  
+  <div class="section-block" data-cat="E">
+    <div class="section-label" style="color:#185FA5;border-color:#185FA5;background:#EBF3FB">Estrategia</div>
+    <div class="items-list">
+    <div class="bb-row" data-cat="E" data-name="cultura propósito valores centrales cultura: propósito y valores centrales">
+      <span class="bb-num" style="color:#185FA5">E1</span><div class="bb-main-text"><span class="bb-name">Cultura: propósito y valores centrales</span><span class="bb-desc">Introducción a opciones de personas y a una cultura por diseño que ayuda al desempeño.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="E" data-name="fortaleza central debilidades tendencias fortaleza central, debilidades y tendencias">
+      <span class="bb-num" style="color:#185FA5">E2</span><div class="bb-main-text"><span class="bb-name">Fortaleza central, debilidades y tendencias</span><span class="bb-desc">Fortalezas, debilidades inherentes y tendencias del mercado.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="E" data-name="valores dos and donts acciones valores: dos and don'ts">
+      <span class="bb-num" style="color:#185FA5">E3</span><div class="bb-main-text"><span class="bb-name">Valores: Dos and don'ts</span><span class="bb-desc">Profundización de valores y acciones concretas que hacemos y no hacemos a partir de ellos.</span><span class="bb-recurso">Presentación y documento</span></div>
+    </div>
+    <div class="bb-row" data-cat="E" data-name="acciones para vivir propósito ritos artefactos acciones para vivir el propósito">
+      <span class="bb-num" style="color:#185FA5">E4</span><div class="bb-main-text"><span class="bb-name">Acciones para vivir el propósito</span><span class="bb-desc">Ritos y artefactos para poder vivir el propósito y los valores cada día.</span><span class="bb-recurso">PEUP + Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="E" data-name="territorio de mercado productos servicios geografía canales territorio de mercado">
+      <span class="bb-num" style="color:#185FA5">E5</span><div class="bb-main-text"><span class="bb-name">Territorio de mercado</span><span class="bb-desc">Definir en qué productos, geografía, canales y tipo de cliente nos enfocaremos para crecer.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="E" data-name="cliente principal promesa de marca persona cliente principal y promesa de marca">
+      <span class="bb-num" style="color:#185FA5">E6</span><div class="bb-main-text"><span class="bb-name">Cliente principal y promesa de marca</span><span class="bb-desc">Mapeo de clientes de alto margen. Identificación del cliente persona y propuesta de valor en tres promesas de marca.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="E" data-name="estrategia en una frase palanca dinero estrategia en una frase">
+      <span class="bb-num" style="color:#185FA5">E7</span><div class="bb-main-text"><span class="bb-name">Estrategia en una frase</span><span class="bb-desc">Identificación de la principal palanca para generar dinero o en qué somos malos con nuestros clientes.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="E" data-name="actividades diferenciadoras gestión promesa marca actividades diferenciadoras">
+      <span class="bb-num" style="color:#185FA5">E8</span><div class="bb-main-text"><span class="bb-name">Actividades diferenciadoras</span><span class="bb-desc">Estrategia bajada a actividades de gestión que alimenten la promesa de marca y la estrategia en una frase.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="E" data-name="modelo de negocios canvas resumen modelo de negocios">
+      <span class="bb-num" style="color:#185FA5">E9</span><div class="bb-main-text"><span class="bb-name">Modelo de negocios</span><span class="bb-desc">Canvas que resume cliente principal, promesa de marca, estrategia en una frase y actividades diferenciadoras.</span><span class="bb-recurso">Diap. Modelo de Negocios · Canva</span></div>
+    </div>
+    <div class="bb-row" data-cat="E" data-name="factor x fricción diferenciación industria factor x">
+      <span class="bb-num" style="color:#185FA5">E10</span><div class="bb-main-text"><span class="bb-name">Factor X</span><span class="bb-desc">Fricción de la industria que buscaremos resolver 10 veces más rápido, barato o mejor que la competencia.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="E" data-name="flywheel estrategia motores crecimiento flywheel de estrategia">
+      <span class="bb-num" style="color:#185FA5">E11</span><div class="bb-main-text"><span class="bb-name">Flywheel de estrategia</span><span class="bb-desc">Definir los motores de crecimiento mediante el método Flywheel.</span><span class="bb-recurso">Presentación + prework</span></div>
+    </div>
+    <div class="bb-row" data-cat="E" data-name="marco atributos de marca diferenciación marco de atributos de marca">
+      <span class="bb-num" style="color:#185FA5">E12</span><div class="bb-main-text"><span class="bb-name">Marco de atributos de marca</span><span class="bb-desc">Atributos para afinar la promesa de marca en mercados nuevos o unidades de negocio.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="E" data-name="palabras que te pertenecen marketing palabras que te pertenecen">
+      <span class="bb-num" style="color:#185FA5">E13</span><div class="bb-main-text"><span class="bb-name">Palabras que te pertenecen</span><span class="bb-desc">Identificar las palabras que queremos apropiarnos frente a nuestros clientes en marketing.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="E" data-name="job to be done viaje del cliente job to be done">
+      <span class="bb-num" style="color:#185FA5">E14</span><div class="bb-main-text"><span class="bb-name">Job to be done</span><span class="bb-desc">Revisión del viaje del cliente para ajustar acciones de mejora.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="E" data-name="profit x motor económico rentabilidad sostenible profit / x">
+      <span class="bb-num" style="color:#185FA5">E15</span><div class="bb-main-text"><span class="bb-name">Profit / X</span><span class="bb-desc">Motor económico que define cómo la empresa genera rentabilidad sostenible. El "X" es la unidad clave de valor.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="E" data-name="BHAG meta audaz largo plazo visión bhag">
+      <span class="bb-num" style="color:#185FA5">E16</span><div class="bb-main-text"><span class="bb-name">BHAG</span><span class="bb-desc">Meta audaz a 15 años que inspira y alinea al equipo hacia el largo plazo.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    </div>
+  </div>
+  <div class="section-block" data-cat="P">
+    <div class="section-label" style="color:#A07800;border-color:#A07800;background:#FEF8E1">Personas</div>
+    <div class="items-list">
+    <div class="bb-row" data-cat="P" data-name="diagnóstico efectividad equipo disfunciones diagnóstico de efectividad de equipo">
+      <span class="bb-num" style="color:#A07800">P1</span><div class="bb-main-text"><span class="bb-name">Diagnóstico de efectividad de equipo</span><span class="bb-desc">Modelo de las 5 disfunciones de Lencioni y encuesta respondida por todo el equipo.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="P" data-name="tipos personalidad MBTI DISC tipos de personalidad">
+      <span class="bb-num" style="color:#A07800">P2</span><div class="bb-main-text"><span class="bb-name">Tipos de personalidad</span><span class="bb-desc">Ejercicios para identificar diferentes personalidades: MBTI o DISC.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="P" data-name="mapa de talentos A B C D jugadores mapa de talentos">
+      <span class="bb-num" style="color:#A07800">P3</span><div class="bb-main-text"><span class="bb-name">Mapa de talentos</span><span class="bb-desc">Taller para identificar jugadores A, B, C y D dentro del equipo y un plan de mejora para cada uno.</span><span class="bb-recurso">Excel + Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="P" data-name="top grading selección talento contratación scorecard top grading">
+      <span class="bb-num" style="color:#A07800">P4</span><div class="bb-main-text"><span class="bb-name">Top Grading</span><span class="bb-desc">Método de selección y gestión de talento que asegura tener a las personas correctas en los puestos clave.</span><span class="bb-recurso">—</span></div>
+    </div>
+    <div class="bb-row" data-cat="P" data-name="ejercicios confianza vulnerabilidad seguridad psicológica ejercicios de confianza">
+      <span class="bb-num" style="color:#A07800">P5</span><div class="bb-main-text"><span class="bb-name">Ejercicios de confianza</span><span class="bb-desc">Conversación sobre las 5 disfunciones y ejercicios de confianza y vulnerabilidad.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="P" data-name="accountability feedback in your face compromiso ejercicio de accountability: feedback in your face">
+      <span class="bb-num" style="color:#A07800">P6</span><div class="bb-main-text"><span class="bb-name">Ejercicio de accountability: Feedback in your face</span><span class="bb-desc">Feedback en equipo líder para promover accountability y compromiso de mejora.</span><span class="bb-recurso">Post-it + Excel explicativo</span></div>
+    </div>
+    <div class="bb-row" data-cat="P" data-name="ejercicios conflicto perfil saboteadores escucha ejercicios de conflicto">
+      <span class="bb-num" style="color:#A07800">P7</span><div class="bb-main-text"><span class="bb-name">Ejercicios de conflicto</span><span class="bb-desc">Perfil de conflicto, cómo enfrentar un conflicto, escucha y ejercicio de saboteadores.</span><span class="bb-recurso">—</span></div>
+    </div>
+    <div class="bb-row" data-cat="P" data-name="ejercicio compromiso QQC disfunciones equipo ejercicio de compromiso">
+      <span class="bb-num" style="color:#A07800">P8</span><div class="bb-main-text"><span class="bb-name">Ejercicio de compromiso</span><span class="bb-desc">Conversación en torno a las cinco disfunciones y al compromiso del equipo.</span><span class="bb-recurso">—</span></div>
+    </div>
+    <div class="bb-row" data-cat="P" data-name="ejercicios comunicación equipo ejercicios de comunicación">
+      <span class="bb-num" style="color:#A07800">P9</span><div class="bb-main-text"><span class="bb-name">Ejercicios de comunicación</span><span class="bb-desc">Dinámicas para mejorar la comunicación dentro del equipo.</span><span class="bb-recurso">—</span></div>
+    </div>
+    <div class="bb-row" data-cat="P" data-name="FACe funciones claras rendición de cuentas face: funciones claras">
+      <span class="bb-num" style="color:#A07800">P10</span><div class="bb-main-text"><span class="bb-name">FACe: funciones claras</span><span class="bb-desc">Identifica las funciones clave del negocio, expectativas y la persona que rinde cuentas de cada una.</span><span class="bb-recurso">Excel</span></div>
+    </div>
+    <div class="bb-row" data-cat="P" data-name="PACe procesos claros rendición cuentas pace: procesos claros">
+      <span class="bb-num" style="color:#A07800">P11</span><div class="bb-main-text"><span class="bb-name">PACe: procesos claros</span><span class="bb-desc">Identifica los procesos clave del negocio, expectativas y la persona que rinde cuentas.</span><span class="bb-recurso">Excel</span></div>
+    </div>
+    <div class="bb-row" data-cat="P" data-name="plan personal propósito metas personales plan personal y propósito">
+      <span class="bb-num" style="color:#A07800">P12</span><div class="bb-main-text"><span class="bb-name">Plan personal y propósito</span><span class="bb-desc">Definición de metas personales, gestión del tiempo y propósito individual.</span><span class="bb-recurso">—</span></div>
+    </div>
+    <div class="bb-row" data-cat="P" data-name="liderazgo GROW modelo conversacional coaching liderazgo: grow">
+      <span class="bb-num" style="color:#A07800">P13</span><div class="bb-main-text"><span class="bb-name">Liderazgo: GROW</span><span class="bb-desc">Taller con foco en modelo conversacional GROW y el líder como coach.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="P" data-name="liderazgo feedback feedforward liderazgo: feedback">
+      <span class="bb-num" style="color:#A07800">P14</span><div class="bb-main-text"><span class="bb-name">Liderazgo: Feedback</span><span class="bb-desc">Taller con foco en modelo de feedback y feedforward. Incluye ejercicio.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="P" data-name="liderazgo accountability tablero control cargo liderazgo: accountability">
+      <span class="bb-num" style="color:#A07800">P15</span><div class="bb-main-text"><span class="bb-name">Liderazgo: Accountability</span><span class="bb-desc">Taller con foco en accountability y herramientas: funciones claras, procesos y tablero de control de cargo.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="P" data-name="reconocimiento estratégico conductas repetir formato reconocimiento estratégico">
+      <span class="bb-num" style="color:#A07800">P16</span><div class="bb-main-text"><span class="bb-name">Reconocimiento estratégico</span><span class="bb-desc">Definir qué conductas quiero que se repitan y qué voy a reconocer en el equipo.</span><span class="bb-recurso">Formato</span></div>
+    </div>
+    </div>
+  </div>
+  <div class="section-block" data-cat="X">
+    <div class="section-label" style="color:#6B4423;border-color:#6B4423;background:#F5EDE5">Ejecución</div>
+    <div class="items-list">
+    <div class="bb-row" data-cat="X" data-name="hábitos de ejecución training KPIs training hábitos de ejecución">
+      <span class="bb-num" style="color:#6B4423">Ej1</span><div class="bb-main-text"><span class="bb-name">Training hábitos de ejecución</span><span class="bb-desc">Entrenamiento en los hábitos clave para ejecutar con consistencia.</span><span class="bb-recurso">—</span></div>
+    </div>
+    <div class="bb-row" data-cat="X" data-name="KPIs diarios semanales training métricas training kpis diarios y semanales">
+      <span class="bb-num" style="color:#6B4423">Ej2</span><div class="bb-main-text"><span class="bb-name">Training KPIs diarios y semanales</span><span class="bb-desc">Ejercicios para construir KPIs efectivos en un trimestre.</span><span class="bb-recurso">—</span></div>
+    </div>
+    <div class="bb-row" data-cat="X" data-name="productividad personal pomodoro urgente importante ladrones tiempo productividad personal">
+      <span class="bb-num" style="color:#6B4423">Ej3</span><div class="bb-main-text"><span class="bb-name">Productividad personal</span><span class="bb-desc">Metas personales, ladrones del tiempo, método Pomodoro y lo urgente vs lo importante.</span><span class="bb-recurso">—</span></div>
+    </div>
+    <div class="bb-row" data-cat="X" data-name="encuesta 10 hábitos diagnóstico ejecución encuesta 10 hábitos">
+      <span class="bb-num" style="color:#6B4423">Ej4</span><div class="bb-main-text"><span class="bb-name">Encuesta 10 hábitos</span><span class="bb-desc">Diagnóstico de los 10 hábitos clave de ejecución en el equipo.</span><span class="bb-recurso">—</span></div>
+    </div>
+    <div class="bb-row" data-cat="X" data-name="ventas consultiva taller vendedores ventas consultiva">
+      <span class="bb-num" style="color:#6B4423">Ej5</span><div class="bb-main-text"><span class="bb-name">Ventas consultiva</span><span class="bb-desc">Taller para definir y enseñar a los vendedores cómo vender de manera consultiva.</span><span class="bb-recurso">—</span></div>
+    </div>
+    <div class="bb-row" data-cat="X" data-name="empezar parar continuar ejercicio retrospectiva ejercicio empezar, parar, continuar">
+      <span class="bb-num" style="color:#6B4423">Ej6</span><div class="bb-main-text"><span class="bb-name">Ejercicio Empezar, Parar, Continuar</span><span class="bb-desc">Dinámica de retrospectiva para identificar qué hacer, qué detener y qué mantener.</span><span class="bb-recurso">—</span></div>
+    </div>
+    <div class="bb-row" data-cat="X" data-name="pits velero aceleradores fricciones dinámica pits / velero">
+      <span class="bb-num" style="color:#6B4423">Ej7</span><div class="bb-main-text"><span class="bb-name">Pits / Velero</span><span class="bb-desc">Dinámica para identificar fricciones (pits) y aceleradores (velas) del equipo.</span><span class="bb-recurso">—</span></div>
+    </div>
+    <div class="bb-row" data-cat="X" data-name="priorizar flywheel aceleradores fricciones presentación priorizar en base al flywheel">
+      <span class="bb-num" style="color:#6B4423">Ej8</span><div class="bb-main-text"><span class="bb-name">Priorizar en base al Flywheel</span><span class="bb-desc">Ejercicios para definir prioridades en base a aceleradores y fricciones del Flywheel.</span><span class="bb-recurso">Presentación + imagen</span></div>
+    </div>
+    </div>
+  </div>
+  <div class="section-block" data-cat="C">
+    <div class="section-label" style="color:#1A7A4A;border-color:#1A7A4A;background:#E5F5ED">Caja</div>
+    <div class="items-list">
+    <div class="bb-row" data-cat="C" data-name="nuggets caja hilo conductor sesiones impacto nuggets de caja">
+      <span class="bb-num" style="color:#1A7A4A">C1</span><div class="bb-main-text"><span class="bb-name">Nuggets de caja</span><span class="bb-desc">Discurso transversal sobre caja para usar en todas las sesiones como hilo conductor.</span><span class="bb-recurso">Documento</span></div>
+    </div>
+    <div class="bb-row" data-cat="C" data-name="caja pulso financiero EBITDA ventas estados financieros caja: el pulso financiero">
+      <span class="bb-num" style="color:#1A7A4A">C2</span><div class="bb-main-text"><span class="bb-name">Caja: el pulso financiero</span><span class="bb-desc">Introducción a caja: relación entre ventas y EBITDA, costos e introducción a estados financieros.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="C" data-name="ciclo conversión efectivo provisionamiento facturación cobranzas ciclo de conversión de efectivo">
+      <span class="bb-num" style="color:#1A7A4A">C3</span><div class="bb-main-text"><span class="bb-name">Ciclo de conversión de efectivo</span><span class="bb-desc">Comprensión y mejora de plazos de provisionamiento, ventas, facturación y cobranzas.</span><span class="bb-recurso">—</span></div>
+    </div>
+    <div class="bb-row" data-cat="C" data-name="poder de 1 siete palancas efectivo cashflow story poder de 1: 7 palancas de efectivo">
+      <span class="bb-num" style="color:#1A7A4A">C4</span><div class="bb-main-text"><span class="bb-name">Poder de 1: 7 palancas de efectivo</span><span class="bb-desc">7 palancas para una estrategia ganadora y dominar la industria. Uso de Cashflow Story.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    <div class="bb-row" data-cat="C" data-name="estrategias precio modelo de negocio margen valor estrategias de precio">
+      <span class="bb-num" style="color:#1A7A4A">C5</span><div class="bb-main-text"><span class="bb-name">Estrategias de precio</span><span class="bb-desc">Principios y ejercicio para definir una estrategia de precios que maximice el margen.</span><span class="bb-recurso">Presentación</span></div>
+    </div>
+    </div>
+  </div>
+  <div class="empty-state" id="empty-state">No se encontraron resultados.</div>
+</div>
+
+<script>
+let currentFilter = 'E';
+let searchQuery = '';
+
+function applyFilters() {
+  const rows = document.querySelectorAll('.bb-row');
+  const sections = document.querySelectorAll('.section-block');
+  let total = 0;
+
+  sections.forEach(sec => {
+    const cat = sec.dataset.cat;
+    const showSection = currentFilter === 'all' || currentFilter === cat;
+    let visible = 0;
+    sec.querySelectorAll('.bb-row').forEach(row => {
+      const matchCat = currentFilter === 'all' || row.dataset.cat === currentFilter;
+      const matchSearch = !searchQuery || row.dataset.name.includes(searchQuery) || row.querySelector('.bb-name').textContent.toLowerCase().includes(searchQuery);
+      const show = matchCat && matchSearch;
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    sec.style.display = showSection && visible > 0 ? '' : 'none';
+    total += visible;
+  });
+
+  document.getElementById('empty-state').classList.toggle('visible', total === 0);
+}
+
+function filter(cat, el) {
+  currentFilter = cat;
+  document.querySelectorAll('.pill').forEach(p => p.className = 'pill');
+  el.classList.add('active-' + cat);
+  applyFilters();
+}
+
+document.getElementById('search').addEventListener('input', function() {
+  searchQuery = this.value.toLowerCase().trim();
+  applyFilters();
+});
+</script>
+</body>
+</html>
